@@ -130,6 +130,7 @@ public class SettlementBatch {
         try {
             String html = "<html>\n" +
                     "<head>\n" +
+                    "<meta charset=\"UTF-8\">\n" +
                     "<style>\n" +
                     "  body {\n" +
                     "    text-align: center;\n" +
