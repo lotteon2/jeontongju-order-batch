@@ -130,6 +130,11 @@ public class SettlementBatch {
 
     private MultipartFile convertHtmlToImage(String date, String shopName, String totalSales, String commission, String finalAmount) {
         try {
+            String[] fontNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+            for (String fontName : fontNames) {
+                log.info("font = {}",fontName);
+            }
+
             String html = "<html>\n" +
                     "<head>\n" +
                     "<style>\n" +
