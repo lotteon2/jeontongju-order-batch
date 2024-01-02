@@ -156,6 +156,7 @@ public class SettlementBatch {
             byte[] htmlBytes = str.getBytes(StandardCharsets.UTF_8);
 
             HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+            log.info("value = {}",htmlBytes);
             imageGenerator.loadHtml(new String(htmlBytes, StandardCharsets.UTF_8));
             BufferedImage bufferedImage = imageGenerator.getBufferedImage();
 
