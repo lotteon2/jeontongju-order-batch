@@ -164,6 +164,8 @@ public class SettlementBatch {
             ImageIO.write(bufferedImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
 
+            log.info("file encoding = {}", System.getProperty("file.encoding"));
+
             return new MyMultipartFile(imageBytes, "image.png");
         } catch (Exception e) {
             throw new RuntimeException("Failed to save the image");
