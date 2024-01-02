@@ -153,9 +153,7 @@ public class SettlementBatch {
                     "<h2>전통주.</h2>\n" +
                     "</body>\n" +
                     "</html>";
-            String html = new String(str.getBytes("euc-kr"), StandardCharsets.UTF_8);
-
-            byte[] htmlBytes = html.getBytes(StandardCharsets.UTF_8);
+            byte[] htmlBytes = str.getBytes(StandardCharsets.UTF_8);
 
             HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
             imageGenerator.loadHtml(new String(htmlBytes, StandardCharsets.UTF_8));
@@ -164,8 +162,6 @@ public class SettlementBatch {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
-
-            log.info("file encoding = {}", System.getProperty("file.encoding"));
 
             return new MyMultipartFile(imageBytes, "image.png");
         } catch (Exception e) {
