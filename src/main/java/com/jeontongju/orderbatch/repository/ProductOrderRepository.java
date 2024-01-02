@@ -13,6 +13,7 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
             "FROM ProductOrder p " +
             "WHERE REPLACE(SUBSTRING(p.orderDate, 1, 7), '-', '') = :date " +
             "AND p.sellerId IN :sellerIds " +
+            "AND p.productOrderStatus='CONFIRMED' "+
             "GROUP BY p.sellerId, p.sellerName")
     List<SellerTotalAmountProjection> getTotalAmountBySellerAndDate(String date, List<? extends Long> sellerIds);
 
