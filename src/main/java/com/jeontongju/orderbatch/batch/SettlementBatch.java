@@ -31,9 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -159,14 +159,9 @@ public class SettlementBatch {
             BufferedImage bufferedImage = imageGenerator.getBufferedImage();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            String fileName = "image.png";
-            byte[] fileNameBytes = fileName.getBytes(StandardCharsets.UTF_8);
-            ImageIO.write(bufferedImage, "png", new File(new String(fileNameBytes, StandardCharsets.UTF_8)));
-
+            ImageIO.write(bufferedImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
-
-            return new MyMultipartFile(imageBytes, new String(fileNameBytes, StandardCharsets.UTF_8));
+            return new MyMultipartFile(imageBytes, "image.png");
         } catch (Exception e) {
             throw new RuntimeException("Failed to save the image");
         }
