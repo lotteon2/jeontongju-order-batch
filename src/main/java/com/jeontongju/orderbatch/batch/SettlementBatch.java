@@ -139,7 +139,7 @@ public class SettlementBatch {
                     "</style>\r\n" +
                     "</head>\r\n" +
                     "<body>\r\n" +
-                    "<h1>정산내역증</h1>\r\n" +
+                    "<h1>csh</h1>\r\n" +
                     "<h2 style=\"text-align: right;\">" + date + "</h2>\r\n" +
                     "<h2 style=\"text-align: right;\">" + shopName + "</h2>\r\n" +
                     "<br>\r\n" +
