@@ -33,6 +33,7 @@ import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,42 +130,43 @@ public class SettlementBatch {
 
     private MultipartFile convertHtmlToImage(String date, String shopName, String totalSales, String commission, String finalAmount) {
         try {
-            String str = "<html>\r\n" +
-                    "<head>\r\n" +
-                    "<meta charset=\"UTF-8\">\r\n" +
-                    "<style>\r\n" +
-                    "  body {\r\n" +
-                    "    text-align: center;\r\n" +
-                    "  }\r\n" +
-                    "</style>\r\n" +
-                    "</head>\r\n" +
-                    "<body>\r\n" +
-                    "<h1>csh</h1>\r\n" +
-                    "<h2 style=\"text-align: right;\">" + date + "</h2>\r\n" +
-                    "<h2 style=\"text-align: right;\">" + shopName + "</h2>\r\n" +
-                    "<br>\r\n" +
-                    "<p style=\"text-align: center;\">총 판매 금액 : " + totalSales + "원</p>\r\n" +
-                    "<p style=\"text-align: center;\">총 판매 수수료 : " + commission + "원</p>\r\n" +
-                    "<hr>\r\n" +
-                    "<p style=\"text-align: center;\">최종 정산 예정 금액 : " + finalAmount + "원</p>\r\n" +
-                    "<br>\r\n" +
-                    "<p style=\"text-align: center;\">1. 위 정산 금액은 다음달 5일 이내에 입금될 예정이에요.</p>\r\n" +
-                    "<p style=\"text-align: center;\">2. 이에 대한 문의는 전통주.(카톡/번호)로 부탁드려요.</p>\r\n" +
-                    "<h2>전통주.</h2>\r\n" +
-                    "</body>\r\n" +
+            String html = "<html>\n" +
+                    "<head>\n" +
+                    "<style>\n" +
+                    "  body {\n" +
+                    "    text-align: center;\n" +
+                    "  }\n" +
+                    "</style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<h1>정산내역증</h1>\n" +
+                    "<h2 style=\"text-align: right;\">" + date + "</h2>\n" +
+                    "<h2 style=\"text-align: right;\">" + shopName + "</h2>\n" +
+                    "<br>\n" +
+                    "<p style=\"text-align: center;\">총 판매 금액 : " + totalSales + "원</p>\n" +
+                    "<p style=\"text-align: center;\">총 판매 수수료 : " + commission + "원</p>\n" +
+                    "<hr>\n" +
+                    "<p style=\"text-align: center;\">최종 정산 예정 금액 : " + finalAmount + "원</p>\n" +
+                    "<br>\n" +
+                    "<p style=\"text-align: center;\">1. 위 정산 금액은 다음달 5일 이내에 입금될 예정이에요.</p>\n" +
+                    "<p style=\"text-align: center;\">2. 이에 대한 문의는 전통주.(카톡/번호)로 부탁드려요.</p>\n" +
+                    "<h2>전통주.</h2>\n" +
+                    "</body>\n" +
                     "</html>";
 
-            byte[] htmlBytes = str.getBytes(StandardCharsets.UTF_8);
-
             HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
-            imageGenerator.loadHtml(new String(htmlBytes, StandardCharsets.UTF_8));
+            imageGenerator.loadHtml(html);
             BufferedImage bufferedImage = imageGenerator.getBufferedImage();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", baos);
+
+            String fileName = "image.png";
+            byte[] fileNameBytes = fileName.getBytes(StandardCharsets.UTF_8);
+            ImageIO.write(bufferedImage, "png", new File(new String(fileNameBytes, StandardCharsets.UTF_8)));
+
             byte[] imageBytes = baos.toByteArray();
 
-            return new MyMultipartFile(imageBytes, "image.png");
+            return new MyMultipartFile(imageBytes, new String(fileNameBytes, StandardCharsets.UTF_8));
         } catch (Exception e) {
             throw new RuntimeException("Failed to save the image");
         }
