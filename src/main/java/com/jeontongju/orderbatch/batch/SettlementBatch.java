@@ -129,7 +129,7 @@ public class SettlementBatch {
 
     private MultipartFile convertHtmlToImage(String date, String shopName, String totalSales, String commission, String finalAmount) {
         try {
-            String html = "<html>\n" +
+            String str = "<html>\n" +
                     "<head>\n" +
                     "<meta charset=\"UTF-8\">\n" +
                     "<style>\n" +
@@ -153,6 +153,7 @@ public class SettlementBatch {
                     "<h2>전통주.</h2>\n" +
                     "</body>\n" +
                     "</html>";
+            String html = new String(str.getBytes("euc-kr"), StandardCharsets.UTF_8);
 
             byte[] htmlBytes = html.getBytes(StandardCharsets.UTF_8);
 
