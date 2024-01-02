@@ -33,6 +33,7 @@ import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,8 +154,10 @@ public class SettlementBatch {
                     "</body>\n" +
                     "</html>";
 
+            byte[] htmlBytes = html.getBytes(StandardCharsets.UTF_8);
+
             HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
-            imageGenerator.loadHtml(html);
+            imageGenerator.loadHtml(new String(htmlBytes, StandardCharsets.UTF_8));
             BufferedImage bufferedImage = imageGenerator.getBufferedImage();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
