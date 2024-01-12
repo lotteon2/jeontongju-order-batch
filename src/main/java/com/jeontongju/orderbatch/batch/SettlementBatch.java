@@ -98,7 +98,7 @@ public class SettlementBatch {
 
                 for(SellerTotalAmountProjection sellerTotalAmountProjection : productOrderRepository.getTotalAmountBySellerAndDate(date, items)){
                     Long totalAmount = sellerTotalAmountProjection.getTotalAmount();
-                    Long commission = (long) (totalAmount * 0.05);
+                    Long commission = (long) (totalAmount * 0.10);
                     String fileName = UUID.randomUUID().toString();
 
                     settlementList.add(Settlement.builder().sellerId(sellerTotalAmountProjection.getSellerId()).settlementYear(Long.valueOf(year))
@@ -130,7 +130,6 @@ public class SettlementBatch {
         try {
             String html = "<html>\n" +
                     "<head>\n" +
-                    "<meta charset=\"UTF-8\">\n" +
                     "<style>\n" +
                     "  body {\n" +
                     "    text-align: center;\n" +
@@ -142,13 +141,13 @@ public class SettlementBatch {
                     "<h2 style=\"text-align: right;\">" + date + "</h2>\n" +
                     "<h2 style=\"text-align: right;\">" + shopName + "</h2>\n" +
                     "<br>\n" +
-                    "<p style=\"text-align: center;\">총 판매 금액 : " + totalSales + "원</p>\n" +
-                    "<p style=\"text-align: center;\">총 판매 수수료 : " + commission + "원</p>\n" +
+                    "<p style=\"text-align: center;\">총 판매 금액 : " + String.format("%,d", Long.parseLong(totalSales)) + "원</p>\n" +
+                    "<p style=\"text-align: center;\">총 판매 수수료 : " + String.format("%,d", Long.parseLong(commission)) + "원</p>\n" +
                     "<hr>\n" +
-                    "<p style=\"text-align: center;\">최종 정산 예정 금액 : " + finalAmount + "원</p>\n" +
+                    "<p style=\"text-align: center;\">최종 정산 예정 금액 : <span style=\"color: #FFD700;\">" + String.format("%,d", Long.parseLong(finalAmount)) + "</span>원</p>\n"+
                     "<br>\n" +
                     "<p style=\"text-align: center;\">1. 위 정산 금액은 다음달 5일 이내에 입금될 예정이에요.</p>\n" +
-                    "<p style=\"text-align: center;\">2. 이에 대한 문의는 전통주.(카톡/번호)로 부탁드려요.</p>\n" +
+                    "<p style=\"text-align: center;\">2. 이에 대한 문의는 전통주.(http://pf.kakao.com/_QDxkbG)로 부탁드려요.</p>\n" +
                     "<h2>전통주.</h2>\n" +
                     "</body>\n" +
                     "</html>";
@@ -160,7 +159,6 @@ public class SettlementBatch {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
-
             return new MyMultipartFile(imageBytes, "image.png");
         } catch (Exception e) {
             throw new RuntimeException("Failed to save the image");
