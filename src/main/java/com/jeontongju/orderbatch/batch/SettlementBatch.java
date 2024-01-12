@@ -101,8 +101,8 @@ public class SettlementBatch {
                     Long commission = (long) (totalAmount * 0.10);
                     String fileName = UUID.randomUUID().toString();
 
-                    settlementList.add(Settlement.builder().sellerId(sellerTotalAmountProjection.getSellerId()).settlementYear(Long.valueOf(year))
-                                    .settlementMonth(Long.valueOf(month)).totalAmount(totalAmount).settlementCommission(commission)
+                    settlementList.add(Settlement.builder().sellerId(sellerTotalAmountProjection.getSellerId()).sellerName(sellerTotalAmountProjection.getSellerName())
+                                    .settlementYear(Long.valueOf(year)).settlementMonth(Long.valueOf(month)).totalAmount(totalAmount).settlementCommission(commission)
                                     .settlementAmount(totalAmount-commission).settlementImgUrl(s3UploadUtil.uploadFile(convertHtmlToImage(settlementDate,
                                     sellerTotalAmountProjection.getSellerName(), String.valueOf(totalAmount), String.valueOf(commission),
                                     String.valueOf(totalAmount - commission)), fileName))
