@@ -29,6 +29,8 @@ public class Settlement {
     @Column(nullable = false)
     private Long sellerId;
 
+    private String sellerName;
+
     @Column(nullable = false)
     private Long settlementYear;
 
