@@ -98,7 +98,7 @@ public class SettlementBatch {
 
                 for(SellerTotalAmountProjection sellerTotalAmountProjection : productOrderRepository.getTotalAmountBySellerAndDate(date, items)){
                     Long totalAmount = sellerTotalAmountProjection.getTotalAmount();
-                    Long commission = (long) (totalAmount * 0.05);
+                    Long commission = (long) (totalAmount * 0.10);
                     String fileName = UUID.randomUUID().toString();
 
                     settlementList.add(Settlement.builder().sellerId(sellerTotalAmountProjection.getSellerId()).settlementYear(Long.valueOf(year))
