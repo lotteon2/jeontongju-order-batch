@@ -75,12 +75,13 @@ public class SettlementBatch {
         Map<String, Object> params = new HashMap<>();
         params.put("settlementDate", date);
         params.put("productOrderStatus", ProductOrderStatusEnum.CONFIRMED);
+        params.put("isAuction",true);
 
         return new JpaPagingItemReaderBuilder<ProductOrder>()
                 .name("settlementReader")
                 .entityManagerFactory(emf)
                 .pageSize(chunkSize)
-                .queryString("SELECT DISTINCT p.sellerId FROM ProductOrder p WHERE CONCAT(SUBSTRING(p.orderDate, 1, 4), SUBSTRING(p.orderDate, 6, 2)) = :settlementDate AND p.productOrderStatus = :productOrderStatus ORDER BY p.sellerId ASC")
+                .queryString("SELECT DISTINCT p.sellerId FROM ProductOrder p JOIN p.orders o WHERE CONCAT(SUBSTRING(p.orderDate, 1, 4), SUBSTRING(p.orderDate, 6, 2)) = :settlementDate AND (p.productOrderStatus = :productOrderStatus OR o.isAuction = :isAuction ) ORDER BY p.sellerId ASC")
                 .parameterValues(params)
         .build();
     }
